@@ -101,4 +101,6 @@ public class AuthController : Controller
     public IActionResult AccessDenied() => View();
 
     public IActionResult Test1() => View();
+
+    public IActionResult Test2() => View();
 }
