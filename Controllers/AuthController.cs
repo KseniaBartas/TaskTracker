@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 using TaskTrecker;
+using TaskTrecker.Models;
 
 public class AuthController : Controller
 {
@@ -42,6 +43,51 @@ public class AuthController : Controller
         await HttpContext.SignInAsync("CookieAuth", new ClaimsPrincipal(claimsIdentity));
 
         // Перенаправление (Redirect) на основную страницу
+        return RedirectToAction("Index", "Home");
+    }
+
+    [HttpGet]
+    public IActionResult Register() => View();
+
+    [HttpPost]
+    public async Task<IActionResult> Register(string email, string password, string confirmPassword)
+    {
+        // Проверка на совпадение паролей
+        if (password != confirmPassword)
+        {
+            ModelState.AddModelError("", "Пароли не совпадают");
+            return View();
+        }
+
+        // Проверка на существование пользователя с таким email
+        var user = _context.Users.SingleOrDefault(u => u.Email == email);
+        if (user != null)
+        {
+            ModelState.AddModelError("", "Пользователь с таким email уже существует");
+            return View();
+        }
+
+        // Создание нового пользователя
+        var newUser = new User
+        {
+            Email = email,
+            Password = password // В реальном приложении пароль должен быть хеширован
+        };
+
+        // Сохранение пользователя в базе данных
+        _context.Users.Add(newUser);
+        await _context.SaveChangesAsync();
+
+        // Автоматическая авторизация после регистрации
+        var claims = new List<Claim>
+        {
+            new Claim(ClaimTypes.Name, newUser.Email)
+        };
+
+        var claimsIdentity = new ClaimsIdentity(claims, "CookieAuth");
+        await HttpContext.SignInAsync("CookieAuth", new ClaimsPrincipal(claimsIdentity));
+
+        // Перенаправление на основную страницу
         return RedirectToAction("Index", "Home");
     }
 
