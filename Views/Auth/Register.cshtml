@@ -1,0 +1,77 @@
+﻿@{
+    ViewData["Title"] = "Register";
+}
+
+<style>
+    .center-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+    }
+
+    .register-form {
+        width: 100%;
+        max-width: 400px;
+        padding: 20px;
+        border: 1px solid #ccc;
+        border-radius: 8px;
+        background-color: #1d60e6;
+        color: #ffffff;
+    }
+
+    .form-group {
+        margin-bottom: 15px;
+    }
+
+    .text-center {
+        text-align: center;
+    }
+
+    .form-control {
+        background-color: #e0e0e0;
+        color: #333;
+        border: 1px solid #ccc;
+    }
+
+    .btn-primary {
+        background-color: #ffffff;
+        color: #1d60e6;
+        border-color: #e0e0e0;
+    }
+
+    .register-form a {
+        color: #ffffff;
+    }
+
+    .register-form a:hover {
+            color: #e0e0e0;
+    }
+
+</style>
+
+<div class="center-container">
+    <div class="register-form">
+        <h2 class="text-center">Register</h2>
+        <form asp-action="Register" method="post">
+            <div class="form-group">
+                <label class="control-label">Email</label>
+                <input class="form-control" name="email" />
+            </div>
+            <div class="form-group">
+                <label class="control-label">Password</label>
+                <input type="password" class="form-control" name="password" />
+            </div>
+            <div class="form-group">
+                <label for="confirmPassword" class="control-label">Confirm Password</label>
+                <input name="confirmPassword" type="password" class="form-control" />
+            </div>
+            <div class="form-group text-center">
+                <input type="submit" value="Register" class="btn btn-primary" />
+            </div>
+        </form>
+        <div class="text-center">
+            <a asp-action="Login">Back to Login</a>
+        </div>
+    </div>
+</div>
