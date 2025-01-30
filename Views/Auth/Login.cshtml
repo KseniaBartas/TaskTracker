@@ -1,21 +1,36 @@
 @{
     ViewData["Title"] = "Login";
+    Layout = "~/Views/Shared/App.cshtml"; // Указываем, что используем главный шаблон
 }
 
-<h2>Login</h2>
-
-<form asp-action="Login" method="post">
-    <div>
-        <label>Username:</label>
-        <input type="text" name="email" />
+<body class="bg-success">
+    <div class="d-flex justify-content-center align-items-center vh-100">
+        <div class="card" style="width: 100%; max-width: 400px;">
+            <div class="card-body">
+                <h2 class="text-center">Login</h2>
+                <form asp-action="Login" method="post">
+                    <div class="form-group">
+                        <label for="text" class="control-label">Username</label>
+                        <input type="text" class="form-control" name="email" required/>
+                    </div>
+                    <div class="form-group">
+                        <label for="password" class="control-label">Password</label>
+                        <input type="password" class="form-control" name="password" required/>
+                    </div>
+                    <div class="form-group">
+                        @if (ViewData.ModelState["Login"]?.Errors.Count > 0)
+                        {
+                            <span class="text-danger">@ViewData.ModelState["Login"]?.Errors[0].ErrorMessage</span>
+                        }
+                    </div>
+                    <div class="form-group text-center">
+                        <button type="submit" class="btn btn-success btn-block">Войти</button>
+                    </div>
+                </form>
+                <div class="text-center">
+                    <a asp-action="Register">Register</a>
+                </div>
+            </div>
+        </div>
     </div>
-    <div>
-        <label>Password:</label>
-        <input type="password" name="password" />
-    </div>
-    <button type="submit">Войти</button>
-</form>
-
-<div>
-    <a asp-action="Register">Register</a>
-</div>
+</body>
