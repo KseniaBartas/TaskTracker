@@ -1,77 +1,42 @@
 ﻿@{
     ViewData["Title"] = "Register";
+    Layout = "~/Views/Shared/App.cshtml"; // Указываем, что используем главный шаблон
 }
 
-<style>
-    .center-container {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        height: 100vh;
-    }
-
-    .register-form {
-        width: 100%;
-        max-width: 400px;
-        padding: 20px;
-        border: 1px solid #ccc;
-        border-radius: 8px;
-        background-color: #1d60e6;
-        color: #ffffff;
-    }
-
-    .form-group {
-        margin-bottom: 15px;
-    }
-
-    .text-center {
-        text-align: center;
-    }
-
-    .form-control {
-        background-color: #e0e0e0;
-        color: #333;
-        border: 1px solid #ccc;
-    }
-
-    .btn-primary {
-        background-color: #ffffff;
-        color: #1d60e6;
-        border-color: #e0e0e0;
-    }
-
-    .register-form a {
-        color: #ffffff;
-    }
-
-    .register-form a:hover {
-            color: #e0e0e0;
-    }
-
-</style>
-
-<div class="center-container">
-    <div class="register-form">
-        <h2 class="text-center">Register</h2>
-        <form asp-action="Register" method="post">
-            <div class="form-group">
-                <label class="control-label">Email</label>
-                <input class="form-control" name="email" />
+<body class="bg-success">
+<div class="d-flex justify-content-center align-items-center vh-100">
+    <div class="card" style="width: 100%; max-width: 400px;">
+        <div class="card-body">
+            <h2 class="text-center">Register</h2>
+            <form asp-action="Register" method="post">
+                <div class="form-group">
+                    <label for="email" class="control-label">Email</label>
+                    <input type="email" class="form-control" name="email" required />
+                        @if (ViewData.ModelState["Email"]?.Errors.Count > 0)
+                        {
+                            <span class="text-danger">@ViewData.ModelState["Email"]?.Errors[0].ErrorMessage</span>
+                        }
+                </div>
+                <div class="form-group">
+                    <label for="password" class="control-label">Password</label>
+                    <input type="password" class="form-control" name="password" required />
+                </div>
+                <div class="form-group">
+                    <label for="confirmPassword" class="control-label">Confirm Password</label>
+                    <input type="password" class="form-control" name="confirmPassword" required />
+                        @if (ViewData.ModelState["ConfirmPassword"]?.Errors.Count > 0)
+                        {
+                            <span class="text-danger">@ViewData.ModelState["ConfirmPassword"]?.Errors[0].ErrorMessage</span>
+                        }
+                </div>
+                <div class="form-group text-center">
+                        <input type="submit" value="Register" class="btn btn-success btn-block"/>
+                </div>
+            </form>
+            <div class="text-center">
+                <a asp-action="Login">Back to Login</a>
             </div>
-            <div class="form-group">
-                <label class="control-label">Password</label>
-                <input type="password" class="form-control" name="password" />
-            </div>
-            <div class="form-group">
-                <label for="confirmPassword" class="control-label">Confirm Password</label>
-                <input name="confirmPassword" type="password" class="form-control" />
-            </div>
-            <div class="form-group text-center">
-                <input type="submit" value="Register" class="btn btn-primary" />
-            </div>
-        </form>
-        <div class="text-center">
-            <a asp-action="Login">Back to Login</a>
         </div>
     </div>
 </div>
+</body>

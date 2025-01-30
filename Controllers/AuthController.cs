@@ -29,7 +29,7 @@ public class AuthController : Controller
 
         if (user == null || user.Password != password)
         {
-            ModelState.AddModelError("", "Неверные почта или пароль");
+            ModelState.AddModelError("Login", "Неверные почта или пароль");
             return View();
         }
 
@@ -55,7 +55,7 @@ public class AuthController : Controller
         // Проверка на совпадение паролей
         if (password != confirmPassword)
         {
-            ModelState.AddModelError("", "Пароли не совпадают");
+            ModelState.AddModelError("ConfirmPassword", "Пароли не совпадают");
             return View();
         }
 
@@ -63,7 +63,7 @@ public class AuthController : Controller
         var user = _context.Users.SingleOrDefault(u => u.Email == email);
         if (user != null)
         {
-            ModelState.AddModelError("", "Пользователь с таким email уже существует");
+            ModelState.AddModelError("Email", "Пользователь с таким email уже существует");
             return View();
         }
 
